@@ -1,4 +1,3 @@
-import React from "react";
 import { FormDataType } from "../types";
 import { useForm } from "react-hook-form";
 import { subjects, teachers } from "../data/data";
@@ -22,12 +21,20 @@ export default function StepTwo({
     formState: { errors },
   } = useForm({ defaultValues });
 
+  const level = defaultValues.tutoringLevel || "unknown";
+
   const availableSubjects = subjects.filter((subject) =>
-    subject.types.includes(appointmentType)
+    appointmentType === "introduction"
+      ? subject.types.includes(appointmentType)
+      : subject.types.includes(appointmentType) &&
+        subject.level?.includes(level)
   );
 
   const availableTeachers = teachers.filter((teacher) =>
-    teacher.types.includes(appointmentType)
+    appointmentType === "introduction"
+      ? teacher.types.includes(appointmentType)
+      : teacher.types.includes(appointmentType) &&
+        teacher.level?.includes(level)
   );
 
   return (
@@ -52,23 +59,27 @@ export default function StepTwo({
             <p className="text-red-500">{String(errors.teacher.message)}</p>
           )}
         </div>
-        {appointmentType !== "introduction" && (
-          <div>
-            <label>Vakken*</label>
-            {availableSubjects.map((subject) => (
-              <div key={subject.id}>
-                <input
-                  type="checkbox"
-                  value={subject.name}
-                  {...register("subject", {
-                    required: "Kies tenminste één vak",
-                  })}
-                />
-                <span>{subject.name}</span>
-              </div>
-            ))}
-          </div>
-        )}
+
+        <div>
+          <label>Vakken*</label>
+          {availableSubjects.map((subject) => (
+            <div key={subject.id}>
+              <input
+                type="checkbox"
+                value={subject.name}
+                {...register("subject", {
+                  required: "Kies tenminste één vak",
+                })}
+              />
+              <span>{subject.name}</span>
+            </div>
+          ))}
+        </div>
+        <div className="flex flex-col">
+          <label>Hoofdstuk/vragen/opmerkingen</label>
+          <textarea className="border-1" {...register("remarks")}></textarea>
+        </div>
+
         <button
           type="button"
           onClick={onPrevious}

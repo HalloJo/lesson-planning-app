@@ -7,5 +7,6 @@ export type FormDataType = {
   tutoringLevel?: string;
   teacher: string;
   subject: string[];
+  remarks: string;
   lesson: string;
 };

@@ -14,6 +14,7 @@ const App = () => {
     appointmentType: "",
     teacher: "",
     subject: [],
+    remarks: "",
     lesson: "",
   });
 
