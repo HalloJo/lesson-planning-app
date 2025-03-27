@@ -1,33 +1,26 @@
 import React from "react";
 import { FormDataType } from "../types";
-import { useForm, useWatch } from "react-hook-form";
+import { useForm } from "react-hook-form";
 
 type StepProps = {
+  defaultValues: Partial<FormDataType>;
   onNext: (data: Partial<FormDataType>) => void;
 };
 
-export default function StepOne({ onNext }: StepProps) {
+export default function StepOne({ onNext, defaultValues }: StepProps) {
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm();
+  } = useForm({ defaultValues });
 
   const appointmentType = watch("appointmentType");
-
-  const onSubmit = (data: Partial<FormDataType>) => {
-    onNext(data);
-    console.log("Step 1 Form Data:", data); // Logs form data in console
-  };
 
   return (
     <div>
       <h2 className="font-medium mb-4">Stap 1: Algemene informatie</h2>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col space-y-4"
-      >
+      <form onSubmit={handleSubmit(onNext)} className="flex flex-col space-y-4">
         <div className="flex gap-2">
           <label htmlFor="name">Naam*</label>
           <input

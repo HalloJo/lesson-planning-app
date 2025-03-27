@@ -1,5 +1,11 @@
 export type FormDataType = {
   name: string;
   email: string;
-  age?: number;
+  phone: string;
+  classSchool: string;
+  appointmentType: string;
+  tutoringLevel?: string;
+  teacher: string;
+  subject: string[];
+  lesson: string;
 };

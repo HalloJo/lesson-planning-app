@@ -8,13 +8,18 @@ const App = () => {
   const [formData, setFormData] = useState({});
 
   const handleNextStep = (data: any) => {
-    setFormData({ ...formData, ...data });
-    setStep(step + 1);
+    setFormData((previous) => ({ ...previous, ...data })); // Merge form data
+    console.log("Form Data:", data);
+    setStep((previous) => previous + 1);
   };
 
-  const handleSubmit = async (data) => {
-    setFormData({ ...formData, ...data });
+  const handlePreviousStep = () => {
+    setStep((previous) => previous - 1);
+  };
 
+  const handleFinalSubmit = (data) => {
+    const fullFormData = { ...formData, ...data };
+    console.log("Final Form Data Submitted:", fullFormData);
     alert("Boeking is succesvol! Bevestigingsmail is verstuurd.");
   };
 
@@ -24,9 +29,24 @@ const App = () => {
         <div className=" relative mx-auto w-full max-w-screen-xl flex flex-col items-center">
           <h1 className="text-4xl font-bold mb-6">Afspraak inplannen</h1>
           <div>
-            {step === 1 && <StepOne onNext={handleNextStep} />}
-            {step === 2 && <StepTwo onNext={handleNextStep} />}
-            {step === 3 && <StepThree onNext={handleNextStep} />}
+            {step === 1 && (
+              <StepOne onNext={handleNextStep} defaultValues={formData} />
+            )}
+            {step === 2 && (
+              <StepTwo
+                onNext={handleNextStep}
+                onPrevious={handlePreviousStep}
+                defaultValues={formData}
+              />
+            )}
+            {step === 3 && (
+              <StepThree
+                onNext={handleNextStep}
+                onPrevious={handlePreviousStep}
+                onSubmit={handleFinalSubmit}
+                defaultValues={formData}
+              />
+            )}
           </div>
         </div>
       </div>
