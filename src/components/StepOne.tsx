@@ -7,12 +7,17 @@ type StepProps = {
 };
 
 export default function StepOne({ onNext }: StepProps) {
-  const { register, handleSubmit, watch } = useForm();
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
 
   const appointmentType = watch("appointmentType");
 
   const onSubmit = (data: Partial<FormDataType>) => {
-    // onNext(data);
+    onNext(data);
     console.log("Step 1 Form Data:", data); // Logs form data in console
   };
 
@@ -28,32 +33,46 @@ export default function StepOne({ onNext }: StepProps) {
           <input
             className="border-1"
             type="text"
-            {...register("name", { required: true })}
+            {...register("name", { required: "Naam is verplicht" })}
           />
+          {errors.name?.message && (
+            <p className="text-red-500">{String(errors.name.message)}</p>
+          )}
         </div>
         <div className="flex gap-2">
           <label>Telefoonnummer*</label>
           <input
             className="border-1"
             type="tel"
-            {...register("phone", { required: true })}
+            {...register("phone", { required: "Telefoonnummer is verplicht" })}
           />
+          {errors.phone?.message && (
+            <p className="text-red-500">{String(errors.phone.message)}</p>
+          )}
         </div>
         <div className="flex gap-2">
           <label>Email*</label>
           <input
             className="border-1"
             type="email"
-            {...register("email", { required: true })}
+            {...register("email", { required: "Email is verplicht" })}
           />
+          {errors.email?.message && (
+            <p className="text-red-500">{String(errors.email.message)}</p>
+          )}
         </div>
         <div className="flex gap-2">
           <label>Klas en school*</label>
           <input
             className="border-1"
-            type="email"
-            {...register("classSchool", { required: true })}
+            type="text"
+            {...register("classSchool", {
+              required: "Klas en school zijn verplicht",
+            })}
           />
+          {errors.classSchool?.message && (
+            <p className="text-red-500">{String(errors.classSchool.message)}</p>
+          )}
         </div>
         <div className="flex gap-2">
           <label>Soort afspraak*</label>
@@ -61,27 +80,40 @@ export default function StepOne({ onNext }: StepProps) {
             <input
               type="radio"
               value="introduction"
-              {...register("appointmentType", { required: true })}
+              {...register("appointmentType", {
+                required: "Kies een type afspraak",
+              })}
             />{" "}
             Kennismaking
             <input
               type="radio"
               value="tutoring"
-              {...register("appointmentType", { required: true })}
+              {...register("appointmentType", {
+                required: "Kies een type afspraak",
+              })}
             />{" "}
             Bijles
             <input
               type="radio"
               value="individual"
-              {...register("appointmentType", { required: true })}
+              {...register("appointmentType", {
+                required: "Kies een type afspraak",
+              })}
             />{" "}
             Individuele huiswerkbegeleiding
           </div>
+          {errors.appointmentType?.message && (
+            <p className="text-red-500">
+              {String(errors.appointmentType.message)}
+            </p>
+          )}
         </div>
         {appointmentType === "tutoring" && (
           <div className="flex gap-2">
             <label>Niveau bijles*</label>
-            <select {...register("tutoringLevel", { required: true })}>
+            <select
+              {...register("tutoringLevel", { required: "Kies een niveau" })}
+            >
               <option value="vmbo">VMBO</option>
               <option value="havo">HAVO</option>
               <option value="vwo">VWO</option>
