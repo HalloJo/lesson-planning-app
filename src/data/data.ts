@@ -1,14 +1,57 @@
-export const mockTeachers = [
-  { id: 1, name: "Miquel" },
-  { id: 2, name: "Jorik" },
-  { id: 3, name: "Winfred" },
+export const teachers = [
+  {
+    id: 1,
+    name: "Miquel",
+    types: ["introduction", "individual", "tutoring"],
+    level: ["elementary", "secondary", "mbo"],
+  },
+  {
+    id: 2,
+    name: "Jaimy",
+    types: ["individual", "tutoring"],
+    level: ["elementary"],
+  },
 ];
 
-export const mockSubjects = [
-  { id: "math", name: "Mathematics" },
-  { id: "english", name: "English" },
-  { id: "science", name: "Science" },
-  { id: "history", name: "History" },
+export const subjects = [
+  { id: "math", name: "Wiskunde", types: ["introduction", "individual"] },
+  { id: "mathA", name: "Wiskunde A", types: ["introduction", "individual"] },
+  { id: "mathB", name: "Wiskunde B", types: ["introduction", "individual"] },
+  { id: "economics", name: "Economie", types: ["introduction", "individual"] },
+  {
+    id: "geography",
+    name: "Aardrijkskunde",
+    types: ["introduction", "individual"],
+  },
+  { id: "physics", name: "Natuurkunde", types: ["introduction", "individual"] },
+  { id: "biology", name: "Biologie", types: ["introduction", "individual"] },
+  {
+    id: "businessEconomics",
+    name: "Bedrijfseconomie",
+    types: ["introduction", "individual"],
+  },
+  { id: "french", name: "Frans", types: ["introduction", "individual"] },
+  {
+    id: "english",
+    name: "Engels",
+    types: ["introduction", "individual", "tutoring"],
+  },
+  {
+    id: "dutch",
+    name: "Nederlands",
+    types: ["introduction", "individual", "tutoring"],
+  },
+  {
+    id: "history",
+    name: "Geschiedenis",
+    types: ["introduction", "individual"],
+  },
+  {
+    id: "chemistry",
+    name: "Scheikunde",
+    types: ["introduction", "individual"],
+  },
+  { id: "calculating", name: "Rekenen", types: ["introduction", "tutoring"] },
 ];
 
 export const mockLessons = [

@@ -101,15 +101,16 @@ export default function StepOne({ onNext, defaultValues }: StepProps) {
             </p>
           )}
         </div>
-        {appointmentType === "tutoring" && (
+        {(appointmentType === "tutoring" ||
+          appointmentType === "individual") && (
           <div className="flex gap-2">
-            <label>Niveau bijles*</label>
+            <label>Niveau*</label>
             <select
               {...register("tutoringLevel", { required: "Kies een niveau" })}
             >
-              <option value="vmbo">VMBO</option>
-              <option value="havo">HAVO</option>
-              <option value="vwo">VWO</option>
+              <option value="elementary">Basisschool</option>
+              <option value="secondary">Middelbare school</option>
+              <option value="mbo">MBO</option>
             </select>
           </div>
         )}

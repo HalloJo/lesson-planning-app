@@ -2,12 +2,22 @@ import { useState } from "react";
 import StepOne from "./components/StepOne";
 import StepTwo from "./components/StepTwo";
 import StepThree from "./components/StepThree";
+import { FormDataType } from "./types";
 
 const App = () => {
   const [step, setStep] = useState<number>(1);
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState<FormDataType>({
+    name: "",
+    email: "",
+    phone: "",
+    classSchool: "",
+    appointmentType: "",
+    teacher: "",
+    subject: [],
+    lesson: "",
+  });
 
-  const handleNextStep = (data: any) => {
+  const handleNextStep = (data: Partial<FormDataType>) => {
     setFormData((previous) => ({ ...previous, ...data })); // Merge form data
     console.log("Form Data:", data);
     setStep((previous) => previous + 1);
@@ -17,7 +27,7 @@ const App = () => {
     setStep((previous) => previous - 1);
   };
 
-  const handleFinalSubmit = (data) => {
+  const handleFinalSubmit = (data: Partial<FormDataType>) => {
     const fullFormData = { ...formData, ...data };
     console.log("Final Form Data Submitted:", fullFormData);
     alert("Boeking is succesvol! Bevestigingsmail is verstuurd.");
@@ -37,6 +47,7 @@ const App = () => {
                 onNext={handleNextStep}
                 onPrevious={handlePreviousStep}
                 defaultValues={formData}
+                appointmentType={formData.appointmentType}
               />
             )}
             {step === 3 && (

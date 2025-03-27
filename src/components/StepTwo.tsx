@@ -1,18 +1,20 @@
 import React from "react";
 import { FormDataType } from "../types";
 import { useForm } from "react-hook-form";
-import { mockSubjects, mockTeachers } from "../data/data";
+import { subjects, teachers } from "../data/data";
 
 type StepProps = {
   onNext: (data: Partial<FormDataType>) => void;
   onPrevious: () => void;
   defaultValues: Partial<FormDataType>;
+  appointmentType: string;
 };
 
 export default function StepTwo({
   onNext,
   onPrevious,
   defaultValues,
+  appointmentType,
 }: StepProps) {
   const {
     register,
@@ -20,13 +22,21 @@ export default function StepTwo({
     formState: { errors },
   } = useForm({ defaultValues });
 
+  const availableSubjects = subjects.filter((subject) =>
+    subject.types.includes(appointmentType)
+  );
+
+  const availableTeachers = teachers.filter((teacher) =>
+    teacher.types.includes(appointmentType)
+  );
+
   return (
     <div>
       <h2 className="font-medium mb-4">Stap 2: Vakspecifieke informatie</h2>
       <form onSubmit={handleSubmit(onNext)} className="space-y-4">
         <div className="flex gap-2">
           <label>Docent*</label>
-          {mockTeachers.map((teacher) => (
+          {availableTeachers.map((teacher) => (
             <div key={teacher.id}>
               <input
                 type="radio"
@@ -42,21 +52,23 @@ export default function StepTwo({
             <p className="text-red-500">{String(errors.teacher.message)}</p>
           )}
         </div>
-        <div>
-          <label>Vakken*</label>
-          {mockSubjects.map((subject) => (
-            <div key={subject.id}>
-              <input
-                type="checkbox"
-                value={subject.name}
-                {...register("subject", {
-                  required: "Kies tenminste één vak",
-                })}
-              />
-              <span>{subject.name}</span>
-            </div>
-          ))}
-        </div>
+        {appointmentType !== "introduction" && (
+          <div>
+            <label>Vakken*</label>
+            {availableSubjects.map((subject) => (
+              <div key={subject.id}>
+                <input
+                  type="checkbox"
+                  value={subject.name}
+                  {...register("subject", {
+                    required: "Kies tenminste één vak",
+                  })}
+                />
+                <span>{subject.name}</span>
+              </div>
+            ))}
+          </div>
+        )}
         <button
           type="button"
           onClick={onPrevious}
